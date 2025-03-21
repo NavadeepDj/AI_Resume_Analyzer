@@ -1,2 +1,2 @@
 # AI_Resume_Analyzer
-AI_Resume_Analyzer -- Made in IBM ICE Hacakthon 2025
+AI_Resume_Analyzer -- Made in IBM ICE Hacakthon 2K25
