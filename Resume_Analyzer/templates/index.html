@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Resume Analyzer</title>
+  <script>
+    async function uploadResume(event) {
+      event.preventDefault();
+      
+      const formData = new FormData();
+      const fileInput = document.getElementById('resume');
+      
+      if (fileInput.files.length === 0) {
+        alert('Please select a PDF resume.');
+        return;
+      }
+      
+      formData.append('resume', fileInput.files[0]);
+
+      try {
+        const response = await fetch('/analyze', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          document.getElementById('result').innerText = data.feedback;
+        } else {
+          document.getElementById('result').innerText = `Error: ${data.error}`;
+        }
+      } catch (error) {
+        document.getElementById('result').innerText = `Error: ${error.message}`;
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>AI Resume Analyzer</h1>
+  <form onsubmit="uploadResume(event)">
+    <label for="resume">Upload your resume (PDF only):</label>
+    <input type="file" id="resume" accept=".pdf" required>
+    <button type="submit">Analyze Resume</button>
+  </form>
+  <h2>Analysis Result:</h2>
+  <pre id="result">Waiting for analysis...</pre>
+</body>
+</html>
